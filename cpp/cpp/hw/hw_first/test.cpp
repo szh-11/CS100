@@ -9,7 +9,7 @@
 class Base
 {
 public:
-    virtual void func() = 0;
+    virtual void func() { std::cout << "Base::foo\n"; };
     virtual void foo(int x) { std::cout << "Base::foo\n"; }
 };
 
@@ -22,7 +22,7 @@ public:
 };
 int main()
 {
-    Derived a;
-    a.func();
-    return 0;
+    // Derived a;
+    // a.func();
+    // return 0;
 }

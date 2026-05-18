@@ -28,10 +28,16 @@ public:
         return m_storage[n];
     }
 
-    bool operator<(const Dynarray &a, const Dynarray &b)
+    friend bool operator<(const Dynarray &a, const Dynarray &b)
     {
-        return std::lexicographical_compare(a.m_storage, a.m_storage + a.mlength, b.m_storage, b.m_storage + b.mlength);
+        return std::lexicographical_compare(a.m_storage, a.m_storage + a.m_length, b.m_storage, b.m_storage + b.m_length);
     }
+    friend bool operator==(const Dynarray &a, const Dynarray &b)
+    {
+        return std::equal(a.m_storage, a.m_storage + a.m_length, b.m_storage, b.m_storage + b.m_length);
+    }
+
+    friend std::ostream &operator<<(std::ostream &, const Dynarray &);
 
     size_type size() const
     {
@@ -124,3 +130,31 @@ public:
 
     Dynarray() : m_storage(nullptr), m_length(0) {}
 };
+
+bool operator>(const Dynarray &lhs, const Dynarray &rhs)
+{
+    return rhs < lhs;
+}
+bool operator<=(const Dynarray &lhs, const Dynarray &rhs)
+{
+    return !(lhs > rhs);
+}
+bool operator>=(const Dynarray &lhs, const Dynarray &rhs)
+{
+    return !(lhs < rhs);
+}
+bool operator!=(const Dynarray &lhs, const Dynarray &rhs)
+{
+    return !(lhs == rhs);
+}
+
+std::ostream &operator<<(std::ostream &os, const Dynarray &r)
+{
+    os << '[';
+    for (Dynarray::size_type i = 0; i < r.m_length - 1; i++)
+        os << r.m_storage[i] << ',';
+
+    os << r.m_storage[r.m_length - 1] << ']';
+
+    return os;
+}

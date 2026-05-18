@@ -202,12 +202,12 @@ private:
 public:
   explicit Dynarray(size_type n) : m_storage(new value_type[n]{}), m_length(n) {}
 
-  int &operator[](std::size_t n)
+  reference operator[](size_type n)
   {
     return m_storage[n];
   }
 
-  const int &operator[](std::size_t n) const
+  const_reference operator[](size_type n) const
   {
     return m_storage[n];
   }
@@ -338,10 +338,10 @@ std::ostream &operator<<(std::ostream &os, const Dynarray &r)
   if (r.m_length > 0)
   {
     for (Dynarray::size_type i = 0; i < r.m_length - 1; i++)
-      os << r.m_storage[i] << ',';
+      os << r.m_storage[i] << ", ";
 
     os << r.m_storage[r.m_length - 1];
-  };
+  }
   os << ']';
   return os;
 }
